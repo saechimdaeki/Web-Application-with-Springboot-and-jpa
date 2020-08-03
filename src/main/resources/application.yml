@@ -8,7 +8,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none #이러면 테이블 드랍하고 그러지않음.
     properties:
       hibernate:
       show_sql: true
