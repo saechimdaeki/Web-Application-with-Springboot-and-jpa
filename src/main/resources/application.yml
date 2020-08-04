@@ -8,11 +8,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none #이러면 테이블 드랍하고 그러지않음.
+      ddl-auto: create  # none 이면 테이블 드랍하고 그러지않음.
     properties:
       hibernate:
-      show_sql: true
-    format_sql: true
-  logging.level:
+        show_sql: true
+        format_sql: true
+logging:
+  level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
