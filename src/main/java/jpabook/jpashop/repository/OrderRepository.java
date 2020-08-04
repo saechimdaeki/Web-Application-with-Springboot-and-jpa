@@ -1,9 +1,9 @@
 package jpabook.jpashop.repository;
 
+
 import jpabook.jpashop.domain.Order;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import org.hibernate.Criteria;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -98,6 +98,8 @@ public class OrderRepository {
         TypedQuery<Order> query=em.createQuery(cq).setMaxResults(1000);
         return query.getResultList();
     }
+
+
     /**
      * 3번째 방법 Querydsl 방법
      * 이방법이 실무에서 조건에 따라 실행되는 쿼리가달라지는 동적쿼리에서 많이사용되는방법
@@ -116,4 +118,14 @@ public class OrderRepository {
                 .fetch();
     }
     */
+
+    public List<Order> findAllWithMemberDelivery() {
+       return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery",Order.class //100% 이해해야함. 실무에서 jpql을 사용하기위해선
+        ).getResultList();
+    }
+
+
 }
