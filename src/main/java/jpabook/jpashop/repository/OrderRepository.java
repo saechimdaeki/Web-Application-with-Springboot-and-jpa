@@ -128,4 +128,14 @@ public class OrderRepository {
     }
 
 
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o" + //db의 distinct키워드를 날려주고 엔티티가 중복인경우 그 중복을 걸러서 컬렉션에 넣어줌,
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i",Order.class)
+                //.setFirstResult(1)
+                //.setMaxResults(100) 페이징 불가!
+                .getResultList();
+    }
 }
