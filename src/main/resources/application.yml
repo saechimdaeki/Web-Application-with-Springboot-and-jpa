@@ -11,9 +11,10 @@ spring:
       ddl-auto: create  # none 이면 테이블 드랍하고 그러지않음.
     properties:
       hibernate:
-        show_sql: true
+       # show_sql: true
         format_sql: true
+        default_batch_fetch_size: 100 #이값을 잘정하는게 중요
 logging:
   level:
     org.hibernate.SQL: debug
-    org.hibernate.type: trace
+    #org.hibernate.type: trace
