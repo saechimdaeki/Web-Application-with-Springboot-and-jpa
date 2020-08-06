@@ -13,7 +13,9 @@ spring:
       hibernate:
        # show_sql: true
         format_sql: true
-        default_batch_fetch_size: 100 #이값을 잘정하는게 중요
+        default_batch_fetch_size: 100 #이 값을 잘정하는게 중요
+    open-in-view: false
+
 logging:
   level:
     org.hibernate.SQL: debug
