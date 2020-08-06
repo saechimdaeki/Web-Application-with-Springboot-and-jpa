@@ -298,3 +298,99 @@ https://spring.io/projects/spring-data
 >
 >하지만 스프링 데이터 JPA는 JPA를 사용해서 이런 기능을 제공할 뿐이다. 결국 JPA 자체를 잘 이해하는
 것이 가장 중요하다.(중요중요쓰~)
+
+## QueryDSL
+http://www.querydsl.com/
+### 실무에서 조건에 따라 실행되는쿼리가 달라지는 동적쿼리를 사용한다. 이럴때 사용
+
+[QueryDsl gradle설정하는법](https://velog.io/@aidenshin/Querydsl-Gradle-%EC%84%A4%EC%A0%95)
+
+
+#### querydsl세팅을 마친 build.gradle 파일
+```
+plugins {
+	id 'org.springframework.boot' version '2.1.16.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	id 'java'
+}
+
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+group = 'jpabook'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
+	implementation 'com.querydsl:querydsl-jpa'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//querydsl 추가
+	implementation 'com.querydsl:querydsl-jpa'
+//querydsl 추가
+	implementation 'com.querydsl:querydsl-apt'
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+	library = "com.querydsl:querydsl-apt"
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', querydslDir]
+		}
+	}
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+```
+
+>Querydsl은 SQL(JPQL)과 모양이 유사하면서 자바 코드로 동적 쿼리를 편리하게 생성할 수 있다.
+>
+>실무에서는 복잡한 동적 쿼리를 많이 사용하게 되는데, 이때 Querydsl을 사용하면 높은 개발 생산성을 얻
+>
+>으면서 동시에 쿼리 오류를 컴파일 시점에 빠르게 잡을 수 있다.
+>
+>꼭 동적 쿼리가 아니라 정적 쿼리인 경우에도 다음과 같은 이유로 Querydsl을 사용하는 것이 좋다.
+>직관적인 문법
+>
+>컴파일 시점에 빠른 문법 오류 발견
+>
+>코드 자동완성
+>
+>코드 재사용(이것은 자바다)
+>
+>JPQL new 명령어와는 비교가 안될 정도로 깔끔한 DTO 조회를 지원한다.
+>
+>Querydsl은 JPQL을 코드로 만드는 빌더 역할을 할 뿐이다. 따라서 JPQL을 잘 이해하면 금방 배울 수 있
+다.
+>
+>Querydsl은 JPA로 애플리케이션을 개발 할 때 선택이 아닌 필수라 생각한다.
+
