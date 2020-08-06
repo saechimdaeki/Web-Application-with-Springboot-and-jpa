@@ -278,3 +278,23 @@ DTO 조회 방식으로 해결이 안되면 NativeSQL or 스프링 JdbcTemplate
 # 결론:
 > 고객서비스의 실시간 API는 OSIV를 끄고, ADMIN처럼 커넥션을 많이 사용하지않는 곳에서는 
 > OSIV를 키자.
+
+## Spring DATA JPA
+https://spring.io/projects/spring-data
+
+> 스프링 데이터 JPA는 JpaRepository라는 인터페이스를 제공하는데,
+>
+> 여가에 기본적인 CRUD기능이 모두제공된다.
+>findByName 처럼 일반화 하기 어려운 기능도 메서드 이름으로 정확한 JPQL 쿼리를 실행한다.
+>
+>select m from member m where m.name = :name
+>개발자는 인터페이스만 만들면 된다. 구현체는 스프링 데이터 JPA가 애플리케이션 실행시점에 주입해준다.
+>
+>스프링 데이터 JPA는 스프링과 JPA를 활용해서 애플리케이션을 만들때 정말 편리한 기능을 많이 제공한
+다. 
+>
+>단순히 편리함을 넘어서 때로는 마법을 부리는 것 같을 정도로 놀라운 개발 생산성의 세계로 우리를 이끌
+어 준다.
+>
+>하지만 스프링 데이터 JPA는 JPA를 사용해서 이런 기능을 제공할 뿐이다. 결국 JPA 자체를 잘 이해하는
+것이 가장 중요하다.(중요중요쓰~)
